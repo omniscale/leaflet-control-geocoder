@@ -4,7 +4,7 @@ import { getJSON } from '../util';
 export default {
   class: L.Class.extend({
     options: {
-      serviceUrl: 'http://your-server.com:8080/',
+      serviceUrl: 'http://dev.omniscale.net:5000/query',
       nameProperties: ['_title_'],
       geocodingQueryParams: {},
       reverseQueryParams: {}
@@ -43,8 +43,7 @@ export default {
         {
           type: 'reverse',
           api_key: this._key,
-          lat: latLng.lat,
-          lon: latLng.lng,
+          query: latLng.lng + ',' + latLng.lat
         },
         this.options.reverseQueryParams
       );
@@ -61,29 +60,15 @@ export default {
     _decodeFeatures: function(data) {
       var results = [],
         i,
-        f,
-        c,
-        latLng,
-        extent,
-        bbox;
+        f;
 
       if (data && data.features) {
         for (i = 0; i < data.features.length; i++) {
           f = data.features[i];
-          c = f.geometry.coordinates;
-          if (typeof(c[0]) === 'number') {
-            latLng = L.latLng(c[1], c[0]);
-          } else {
-            latLng = L.latLng(c[0][0][1], c[0][0][0]);
-            continue;
-          }
-          bbox = L.latLngBounds(latLng, latLng);
-
           results.push({
             name: this._deocodeFeatureName(f),
             html: this.options.htmlTemplate ? this.options.htmlTemplate(f) : undefined,
-            center: latLng,
-            bbox: bbox,
+            feature: f,
             properties: f.properties
           });
         }

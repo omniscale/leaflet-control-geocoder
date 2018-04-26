@@ -161,18 +161,23 @@ export default {
 
     markGeocode: function(result) {
       result = result.geocode || result;
-
-      this._map.fitBounds(result.bbox);
-
       if (this._geocodeMarker) {
         this._map.removeLayer(this._geocodeMarker);
       }
 
-      this._geocodeMarker = new L.Marker(result.center)
-        .bindPopup(result.html || result.name)
-        .addTo(this._map)
-        .openPopup();
-
+      if (result.feature) {
+        this._geocodeMarker = new L.geoJSON(result.feature)
+          .bindPopup(result.html || result.name)
+          .addTo(this._map)
+          .openPopup();
+        this._map.fitBounds(this._geocodeMarker.getBounds({ padding: [150, 150] }));
+      } else {
+        this._geocodeMarker = new L.Marker(result.center)
+          .bindPopup(result.html || result.name)
+          .addTo(this._map)
+          .openPopup();
+        this._map.fitBounds(result.bbox);
+      }
       return this;
     },
 
