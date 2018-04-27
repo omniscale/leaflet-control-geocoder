@@ -164,7 +164,6 @@ export default {
       if (this._geocodeMarker) {
         this._map.removeLayer(this._geocodeMarker);
       }
-
       if (result.feature) {
         this._geocodeMarker = new L.geoJSON(result.feature)
           .bindPopup(result.html || result.name)

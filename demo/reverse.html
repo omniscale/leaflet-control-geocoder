@@ -2,8 +2,7 @@
 <html>
 <head>
 	<title>Leaflet Control Geocoder</title>
-
-  	<meta name='viewport' content='width=device-width, user-scalable=no initial-scale=1, maximum-scale=1'>
+ 	<meta name='viewport' content='width=device-width, user-scalable=no initial-scale=1, maximum-scale=1'>
 	<link rel="stylesheet" href="./dist/leaflet.css" />
 	<link rel="stylesheet" href="./dist/Control.Geocoder.css" />
 	<script src="./dist/leaflet-src.js"></script>
@@ -24,13 +23,15 @@
 
 	<script type="text/javascript">
 		var map = L.map('map').setView([54.1, 12.08], 12),
-			geocoder = L.Control.Geocoder.mvpgeocodr('your-api-key', {
-				geocodingQueryParams: {
-					'class': 'address',
-					'out_epsg': '4326',
-					'limit': 10
+			geocoder = L.Control.Geocoder.mvpgeocodr(
+				'your-api-key', 
+				{
+					reverseQueryParams: {
+						'class': 'address',
+						'in_epsg': '4326',
+					}
 				}
-			}),
+			),
 			control = L.Control.geocoder({
 				geocoder: geocoder
 			}).addTo(map);
@@ -38,6 +39,25 @@
 		L.tileLayer('https://www.orka-mv.de/geodienste/orkamv/tiles/1.0.0/orkamv/GLOBAL_WEBMERCATOR/{z}/{x}/{y}.png', {
 		}).addTo(map);
 
+		function popupTitle(feature, layer) {
+			layer.bindPopup(feature.properties._title_);
+		}
+
+		var geojsonLayer = L.geoJSON([], {
+			onEachFeature: popupTitle
+		}).addTo(map);
+
+		map.on('click', function(e) {
+			geojsonLayer.clearLayers();
+
+			geocoder.reverse(e.latlng, map.options.crs.scale(
+				map.getZoom()), function(results) {
+					for (i = 0; i < results.length; i++) { 
+						geojsonLayer.addData(results[i].feature)
+					}
+			   }
+			)
+		})		
 	</script>
 </body>
 </html>
