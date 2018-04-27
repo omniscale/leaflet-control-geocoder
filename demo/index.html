@@ -28,10 +28,13 @@
 				geocodingQueryParams: {
 					'class': 'address',
 					'out_epsg': '4326',
-					'limit': 10
+					'limit': 25
 				}
 			}),
 			control = L.Control.geocoder({
+				collapsed: false,
+				placeholder: 'Suche...',
+	  		    errorMessage: 'Kein Ergebenis gefunden.',
 				geocoder: geocoder
 			}).addTo(map);
 

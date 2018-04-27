@@ -26,6 +26,11 @@
 			geocoder = L.Control.Geocoder.mvpgeocodr(
 				'your-api-key', 
 				{
+					geocodingQueryParams: {
+						'class': 'address',
+						'out_epsg': '4326',
+						'limit': 25
+					},
 					reverseQueryParams: {
 						'class': 'address',
 						'in_epsg': '4326',
@@ -33,6 +38,9 @@
 				}
 			),
 			control = L.Control.geocoder({
+				collapsed: false,
+				placeholder: 'Suche...',
+	  		    errorMessage: 'Kein Ergebenis gefunden.',
 				geocoder: geocoder
 			}).addTo(map);
 

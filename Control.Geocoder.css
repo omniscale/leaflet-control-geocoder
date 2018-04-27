@@ -39,7 +39,7 @@
   font-size: 120%;
   border: 0;
   background-color: transparent;
-  width: 246px;
+  width: 470px;
 }
 
 .leaflet-control-geocoder-icon {
@@ -82,7 +82,7 @@
 }
 .leaflet-control-geocoder-alternatives {
   display: block;
-  width: 272px;
+  width: 500px;
   list-style: none;
   padding: 0;
   margin: 0;
