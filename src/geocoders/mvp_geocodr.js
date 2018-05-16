@@ -19,7 +19,7 @@ export default {
       var params = L.extend(
         {
           type: 'search',
-          api_key: this._key,
+          key: this._key,
           query: query
         },
         this.options.geocodingQueryParams
@@ -42,7 +42,7 @@ export default {
       var params = L.extend(
         {
           type: 'reverse',
-          api_key: this._key,
+          key: this._key,
           query: latLng.lng + ',' + latLng.lat
         },
         this.options.reverseQueryParams
