@@ -4,7 +4,7 @@ import { getJSON } from '../util';
 export default {
   class: L.Class.extend({
     options: {
-      serviceUrl: 'http://dev.omniscale.net:5000/query',
+      serviceUrl: '',
       nameProperties: ['_title_'],
       geocodingQueryParams: {},
       reverseQueryParams: {}

@@ -25,6 +25,7 @@
 	<script type="text/javascript">
 		var map = L.map('map').setView([54.1, 12.08], 12),
 			geocoder = L.Control.Geocoder.mvpgeocodr('your-api-key', {
+				serviceUrl: '/query',
 				geocodingQueryParams: {
 					'class': 'address',
 					'out_epsg': '4326',
