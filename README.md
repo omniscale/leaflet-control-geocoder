@@ -8,12 +8,13 @@ The plugin supports many different data providers:
 * [OSM](https://www.openstreetmap.org/)/[Nominatim](https://wiki.openstreetmap.org/wiki/Nominatim)
 * [Bing Locations API](http://msdn.microsoft.com/en-us/library/ff701715.aspx)
 * [Google Geocoding API](https://developers.google.com/maps/documentation/geocoding/)
-* [Mapbox Geocoding](https://www.mapbox.com/developers/api/geocoding/)
+* [Mapbox Geocoding](https://www.mapbox.com/api-documentation/#geocoding)
 * [MapQuest Geocoding API](http://developer.mapquest.com/web/products/dev-services/geocoding-ws)
 * [What3Words](http://what3words.com/)
 * [Photon](http://photon.komoot.de/)
-* [Mapzen Search](https://mapzen.com/projects/search)
+* [Pelias](https://pelias.io/), [geocode.earth](https://geocode.earth/) (formerly Mapzen Search)
 * [HERE Geocoder API](https://developer.here.com/documentation/geocoder/topics/introduction.html)
+* [Neutrino API](https://www.neutrinoapi.com/api/geocode-address/)
 
 The plugin can easily be extended to support other providers. Current extensions:
 
@@ -95,6 +96,9 @@ L.Control.geocoder(options)
 | `errorMessage`    |  String          |  `"Nothing found."` | Message when no result found / geocoding error occurs |
 | `geocoder`        |  IGeocoder       |  `new L.Control.Geocoder.Nominatim()` | Object to perform the actual geocoding queries |
 | `showResultIcons` |  Boolean         |  `false`            | Show icons for geocoding results (if available); supported by Nominatim |
+| `suggestMinLength`|  Number          |  `3`                | Minimum number characters before suggest functionality is used (if available from geocoder) |
+| `suggestTimeout`  |  Number          |  `250`              | Number of milliseconds after typing stopped before suggest functionality is used (if available from geocoder) |
+| `queryMinLength`  |  Number          |  `1`                | Minimum number of characters in search text before performing a query |
 
 ### Methods
 

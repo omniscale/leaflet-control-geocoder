@@ -11,6 +11,7 @@ import Mapzen from './geocoders/mapzen';
 import ArcGis from './geocoders/arcgis';
 import HERE from './geocoders/here';
 import MVPGeocodr from './geocoders/mvp_geocodr';
+import Neutrino from './geocoders/neutrino';
 
 var Geocoder = L.Util.extend(Control.class, {
   Nominatim: Nominatim.class,
@@ -28,13 +29,19 @@ var Geocoder = L.Util.extend(Control.class, {
   Photon: Photon.class,
   photon: Photon.factory,
   Mapzen: Mapzen.class,
+  GeocodeEarth: Mapzen.class,
+  Pelias: Mapzen.class,
   mapzen: Mapzen.factory,
+  geocodeEarth: Mapzen.factory,
+  pelias: Mapzen.factory,
   ArcGis: ArcGis.class,
   arcgis: ArcGis.factory,
   HERE: HERE.class,
   here: HERE.factory,
   MVPGeocodr: MVPGeocodr.class,
-  mvpgeocodr: MVPGeocodr.factory
+  mvpgeocodr: MVPGeocodr.factory,
+  Neutrino: Neutrino.class,
+  neutrino: Neutrino.factory
 });
 
 export default Geocoder;

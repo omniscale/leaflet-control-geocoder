@@ -10,6 +10,7 @@ export default {
       position: 'topright',
       placeholder: 'Search...',
       errorMessage: 'Nothing found.',
+      queryMinLength: 1,
       suggestMinLength: 3,
       suggestTimeout: 250,
       defaultMarkGeocode: true
@@ -42,6 +43,7 @@ export default {
       input = this._input = L.DomUtil.create('input', '', form);
       input.type = 'text';
       input.placeholder = this.options.placeholder;
+      L.DomEvent.disableClickPropagation(input);
 
       this._errorElement = L.DomUtil.create('div', className + '-form-no-error', container);
       this._errorElement.innerHTML = this.options.errorMessage;
@@ -181,18 +183,23 @@ export default {
     },
 
     _geocode: function(suggest) {
+      var value = this._input.value;
+      if (!suggest && value.length < this.options.queryMinLength) {
+        return;
+      }
+
       var requestCount = ++this._requestCount,
         mode = suggest ? 'suggest' : 'geocode',
-        eventData = { input: this._input.value };
+        eventData = { input: value };
 
-      this._lastGeocode = this._input.value;
+      this._lastGeocode = value;
       if (!suggest) {
         this._clearResults();
       }
 
       this.fire('start' + mode, eventData);
       this.options.geocoder[mode](
-        this._input.value,
+        value,
         function(results) {
           if (requestCount === this._requestCount) {
             eventData.results = results;
@@ -325,7 +332,11 @@ export default {
             this._geocode();
           }
           break;
+        default:
+          return;
       }
+
+      L.DomEvent.preventDefault(e);
     },
     _change: function() {
       var v = this._input.value;

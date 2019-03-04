@@ -4,7 +4,7 @@ import { getJSON } from '../util';
 export default {
   class: L.Class.extend({
     options: {
-      serviceUrl: 'https://api.tiles.mapbox.com/v4/geocode/mapbox.places-v1/',
+      serviceUrl: 'https://api.mapbox.com/geocoding/v5/mapbox.places/',
       geocodingQueryParams: {},
       reverseQueryParams: {}
     },
@@ -43,10 +43,22 @@ export default {
             } else {
               latLngBounds = L.latLngBounds(latLng, latLng);
             }
+
+            var properties = {
+              text: loc.text,
+              address: loc.address
+            };
+
+            for (var j = 0; j < loc.context.length; j++) {
+              var id = loc.context[j].id.split('.')[0];
+              properties[id] = loc.context[j].text;
+            }
+
             results[i] = {
               name: loc.place_name,
               bbox: latLngBounds,
-              center: latLng
+              center: latLng,
+              properties: properties
             };
           }
         }

@@ -4,7 +4,7 @@ import { getJSON } from '../util';
 export default {
   class: L.Class.extend({
     options: {
-      service_url: 'http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer'
+      service_url: 'https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer'
     },
 
     initialize: function(accessToken, options) {
@@ -25,7 +25,7 @@ export default {
         params.token = this._key;
       }
 
-      getJSON(this.options.service_url + '/findAddressCandidates', params, function(data) {
+      getJSON(this.options.service_url + '/findAddressCandidates', L.extend(params, this.options.geocodingQueryParams), function(data) {
         var results = [],
           loc,
           latLng,
